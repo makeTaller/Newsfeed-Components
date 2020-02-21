@@ -1,7 +1,6 @@
 /* This is the data we will be using to create our article components */
 /* Look over this data, then proceed to line 91*/
-const data = [
-  {
+const data = [{
     title: 'Lambda School Students: "We\'re the best!"',
     date: 'Nov 5th, 2018',
     firstParagraph: `Lucas ipsum dolor sit amet ben twi'lek padmé darth darth darth moff hutt organa twi'lek. Ben amidala secura skywalker lando
@@ -85,6 +84,24 @@ const data = [
     thirdParagraph: `Hodor hodor - hodor... Hodor hodor hodor hodor. Hodor. Hodor! Hodor hodor, hodor hodor hodor hodor hodor; hodor hodor? Hodor!
           Hodor hodor, HODOR hodor, hodor hodor?! Hodor! Hodor hodor, HODOR hodor, hodor hodor, hodor, hodor hodor. Hodor, hodor.
           Hodor. Hodor, hodor, hodor. Hodor hodor... Hodor hodor hodor?! Hodor, hodor... Hodor hodor HODOR hodor, hodor hodor. Hodor.`
+  },
+  {
+    title: 'Components Are a Lot of Fun!',
+    date: 'Aug 13th, 2019',
+    firstParagraph: `Tech virtual drone online browser platform through in a system. But stream software offline. Professor install angel sector 
+          anywhere create at components smart. Document fab developers encryption smartphone powered, bespoke blockstack edit atoms. Companies a
+          storage adopters. Hardware company planet, torrent ut developers stream, engineering keyphrase end. Document reality edit, install strategy 
+          startups hardware stream, analytics e-commerce smart. Privacy news data policies analytics documents.`,
+
+    secondParagraph: `Tech virtual drone online browser platform through in a system. But stream software offline. Professor install angel sector 
+    anywhere create at components smart. Document fab developers encryption smartphone powered, bespoke blockstack edit atoms. Companies a
+    storage adopters. Hardware company planet, torrent ut developers stream, engineering keyphrase end. Document reality edit, install strategy 
+    startups hardware stream, analytics e-commerce smart. Privacy news data policies analytics documents.`,
+
+    thirdParagraph: `Tech virtual drone online browser platform through in a system. But stream software offline. Professor install angel sector 
+    anywhere create at components smart. Document fab developers encryption smartphone powered, bespoke blockstack edit atoms. Companies a
+    storage adopters. Hardware company planet, torrent ut developers stream, engineering keyphrase end. Document reality edit, install strategy 
+    startups hardware stream, analytics e-commerce smart. Privacy news data policies analytics documents.`
   }
 ];
 
@@ -101,7 +118,7 @@ const data = [
 
   Hint: You will need to use createElement more than once here!
 
-  Your function should take either an object as it's one argument, or 5 separate arguments mapping to each piece of the data object above.
+  Your function should take either an object as it's one argument, or 5 separate arguments mapping to each peice of the data object above.
 
   Step 2: Add an event listener to the expandButton span. This event listener should toggle the class 'article-open' on the 'article' div.
 
@@ -109,6 +126,99 @@ const data = [
 
   Step 4: Map over the data, creating a component for each oject and add each component to the DOM as children of the 'articles' div.
 
-  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new article.
+  Step 5: Add a new article to the array. Make sure it is in the same format as the others. Refresh the page to see the new artible
 
 */
+const container = document.querySelector('.articles');
+
+// function to get the article titles
+function h2TextCreator(title) {
+  const h2 = document.createElement('h2');
+  h2.textContent = title;
+
+  return h2;
+}
+
+// function to get the article dates
+function articleDates(date) {
+  const datePara = document.createElement('p');
+  datePara.classList.add('date');
+  datePara.textContent = date;
+
+  return datePara
+}
+
+// function to get first paragraph
+function first(firstParagraph) {
+  const firstPara = document.createElement('p');
+  firstPara.textContent = firstParagraph;
+
+  return firstPara;
+}
+
+// function to get second paragraph
+function second(secondParagraph) {
+  const secondPara = document.createElement('p');
+  secondPara.textContent = secondParagraph;
+
+  return secondPara;
+}
+
+// function to get third paragraph
+function third(thirdParagraph) {
+  const thirdPara = document.createElement('p');
+  thirdPara.textContent = thirdParagraph;
+
+  return thirdPara;
+}
+
+// function to get the span
+function articleSpan(parent) {
+  const span = document.createElement('span');
+  span.classList.add('expandButton');
+  span.textContent = 'Read';
+  span.addEventListener('click', () => {
+      parent.classList.toggle('article-open');
+  });
+
+  return span;
+}
+
+// stretch function for closing the article after reading
+function closeSpan(parent) {
+  const close = document.createElement('span');
+  close.classList.add('close');
+  close.textContent = 'X'
+  close.addEventListener('click', () => {
+    parent.style.display = 'none';
+  })
+
+  return close;
+}
+
+
+// main article creator
+function articleCreator(title, date, firstParagraph, secondParagraph, thirdParagraph) {
+  const article = document.createElement('div');
+  article.classList.add('article');
+
+  article.appendChild(h2TextCreator(title));
+  article.appendChild(articleDates(date));
+  article.appendChild(first(firstParagraph));
+  article.appendChild(first(secondParagraph));
+  article.appendChild(first(thirdParagraph));
+  article.appendChild(articleSpan(article));
+  article.appendChild(closeSpan(article));
+
+  return article;
+}
+
+
+
+const articleComponents = data.map((article) => {
+  return articleCreator(article.title, article.date, article.firstParagraph, article.secondParagraph, article.thirdParagraph);
+});
+
+articleComponents.forEach((article) => {
+  container.appendChild(article);
+});
